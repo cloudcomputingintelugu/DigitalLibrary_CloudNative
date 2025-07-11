@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome - Digital Library{% endblock %}
+
+{% block content %}
+<h2>Welcome, {{ user.name }}</h2>
+
+<p><strong>Email:</strong> {{ user.email }}</p>
+<p><strong>Mobile:</strong> {{ user.mobile }}</p>
+<p><strong>Gender:</strong> {{ user.gender }}</p>
+<p><strong>Location:</strong> {{ user.location }}</p>
+
+{% if image_url %}
+    <img src="{{ image_url }}" width="150" alt="User Image" /><br /><br />
+{% else %}
+    <p>No image uploaded.</p>
+{% endif %}
+
+<hr>
+<a href="{{ url_for('user_page') }}" class="btn btn-primary">📚 Go to Library</a>
+<a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+{% endblock %}

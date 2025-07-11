@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h3 class="text-center mb-4">Borrow or Return Books</h3>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="book_id">Select Book:</label>
+            <select name="book_id" class="form-control" required>
+                <option value="">--Select--</option>
+                {% for book in books %}
+                    <option value="{{ book[0] }}">{{ book[1] }} by {{ book[2] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <input type="hidden" name="action" value="borrow">
+        <button type="submit" class="btn btn-primary mt-2">Borrow</button>
+    </form>
+
+    <hr>
+
+    <h4 class="mt-4">Borrowing History</h4>
+    <div class="table-responsive">
+        <table class="table table-bordered mt-2">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Borrow Date</th>
+                    <th>Return Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in history %}
+                    <tr>
+                        <td>{{ entry[0] }}</td>
+                        <td>{{ entry[1] }}</td>
+                        <td>
+                            {{ entry[2].strftime('%Y-%m-%d %H:%M:%S') if entry[2] else 'N/A' }}
+                        </td>
+                        <td>
+                            {{ entry[3].strftime('%Y-%m-%d %H:%M:%S') if entry[3] else 'Not Returned' }}
+                        </td>
+                        <td>
+                            {% if not entry[3] %}
+                                <form method="POST" style="margin:0;">
+                                    <input type="hidden" name="book_id" value="{{ entry[4] }}">
+                                    <input type="hidden" name="action" value="return">
+                                    <button type="submit" class="btn btn-sm btn-primary">Return</button>
+                                </form>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ url_for('logout') }}" class="btn btn-danger mt-3">Logout</a>
+</div>
+{% endblock %}
