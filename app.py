@@ -12,8 +12,6 @@ app.secret_key = 'your_secret_key'
 S3_BUCKET = 'ccit-project5'
 S3_REGION = 'ap-south-2'
 CLOUDFRONT_DOMAIN = 'd2svc8nm4d0v3c.cloudfront.net'
-AWS_ACCESS_KEY = 'AK'
-AWS_SECRET_KEY = 'SAK'
 
 # Lambda API URLs
 SIGNUP_API_URL = "https://tx1oq6tbb7.execute-api.ap-south-2.amazonaws.com/prod/SignUp"
@@ -28,9 +26,7 @@ GET_BARROWED_BOOKS_HISTORY_API_URL = "https://tx1oq6tbb7.execute-api.ap-south-2.
 # AWS S3 Client
 s3_client = boto3.client(
     's3',
-    region_name=S3_REGION,
-    aws_access_key_id=AWS_ACCESS_KEY,
-    aws_secret_access_key=AWS_SECRET_KEY
+    region_name=S3_REGION
 )
 
 @app.route('/')
@@ -225,4 +221,4 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=80)
